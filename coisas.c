@@ -59,14 +59,23 @@ tipo de peso dos arcos (sempre sera EUC_2D), dimensão(quantidade de cidades)
 * pós-condicao: travaler alocado e preenchido com seus daods*/
 Tsp* criaTsp(char* nome, char* type, char* edgeWeightType, int dimension) {
   Tsp* tsp = (Tsp*) malloc(sizeof(tsp));
-  tsp->nome = malloc((strlen(nome)+1)*sizeof(char));
+
+  printf("\n\nNAME: %s\n", nome);
+
+  tsp->nome = (char*)malloc((strlen(nome)+1)*sizeof(char));
   strcpy(tsp->nome, nome);
-  tsp->type = malloc((strlen(type)+1)*sizeof(char));
+
+  tsp->type = (char*)malloc((strlen(type)+1)*sizeof(char));
   strcpy(tsp->type, type);
-  tsp->edgeWeightType = malloc((strlen(edgeWeightType)+1)*sizeof(char));
+
+  tsp->edgeWeightType = (char*)malloc((strlen(edgeWeightType)+1)*sizeof(char));
   strcpy(tsp->edgeWeightType, edgeWeightType);
+
   tsp->dimension = dimension;
-  tsp->arrayPontos = (Ponto**) malloc(dimension*sizeof(Ponto*));
+  printf("\n\nnome2: %s\n", tsp->nome);
+  tsp->arrayPontos = (Ponto**) malloc(tsp->dimension*sizeof(Ponto*));
+
+  printf("\n\nnome3: %s\n", tsp->nome);
   return tsp;
 }
 
@@ -77,10 +86,10 @@ Tsp* criaTsp(char* nome, char* type, char* edgeWeightType, int dimension) {
 * pós-condicao: dados do travaler printados na tela*/
 void imprimeTsp (Tsp* tsp) {
   int dimension = tsp->dimension;
-  printf("TSP: %s\nTipo: %s | TipoEdge: %s\nDimensão: %d\n", tsp->nome, tsp->type, tsp->edgeWeightType, dimension);
-  for (int i = 0; i < dimension; i++) {
-    imprimePonto(tsp->arrayPontos[i]);
-  }
+  printf("Name: %s \nTYPE: %s  \nEdge: %s \nDimension: %d \n", tsp->nome, tsp->type, tsp->edgeWeightType, dimension);
+  // for (int i = 0; i < dimension; i++) {
+  //   imprimePonto(tsp->arrayPontos[i]);
+  // }
   printf("\n\n");
 }
 

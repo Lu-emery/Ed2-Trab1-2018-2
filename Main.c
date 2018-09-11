@@ -23,18 +23,25 @@ int main(int argc, char const *argv[])
 
 	while (!feof(entrada)) {
 
-		printf("Lendo NAME\n");
+		//printf("Lendo NAME\n");
 		fscanf(entrada, "NAME: %s\n", nome);
 		printf("NAME: %s\n", nome);
+
 		char teste[20];
-		printf("Lendo TYPE\n");
+		//printf("Lendo TYPE\n");
 		while (strcmp(teste, "TYPE:") != 0) {
-			printf("ignorando o comentario\n");
+			//printf("ignorando o comentario\n");
 			fscanf(entrada, "%s", teste);
 		}
+
 		fscanf(entrada, " %s\nDIMENSION: %d\nEDGE_WEIGHT_TYPE: %s\nNODE_COORD_SECTION\n", type, &dimension, edgeWeightType);
 		printf("TYPE: %s\nDIMENSION: %d\nEDGE_WEIGHT_TYPE: %s\n", type, dimension, edgeWeightType);
+
 		arv = criaTsp(nome, type, edgeWeightType, dimension);
+
+		printf("\n\n");
+		imprimeTsp(arv);
+		return 0;
 
 		for (int i = 0; i < dimension; ++i) {
 			int index;
