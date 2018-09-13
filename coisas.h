@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct ponto Ponto;
-
+typedef struct city city;
 typedef struct tsp Tsp;
+typedef struct edge edge;
 
 
-Ponto* criaPonto(int ind, float x, float y);
-void imprimePonto(Ponto* p);
-Tsp* inserePonto(Tsp* traveler, Ponto* p);
+
+city* criaCity(int ind, float x, float y);
+void imprimeCity(city* p);
+Tsp* insereCity(Tsp* traveler, city* p);
 Tsp* criaTsp(char* nome, char* type, char* edgeWeightType, int dimension);
 void imprimeTsp (Tsp* tsp);
