@@ -29,17 +29,17 @@ int main(int argc, char const *argv[]){
 		float x, y;
 		fscanf(entrada, "%d %f %f\n", &index, &x, &y);
 
-		insereCity(arv, criaCity(index, x, y) );
+		insereCity(arv, criaCity(index, x, y));
 	}
 	fclose(entrada);
 
 	//Edges
-	int cont = ( (dimension*dimension) - dimension)/2;
+	int cont = ((dimension*dimension) - dimension)/2;
 	edge vetEdge[cont+1];
 
 	cont=1;
-	for(int i = 1; i < dimension; i++){
-		for(int j = i+1; j <= dimension; j++){
+	for(int i = 1; i < dimension; i++) {
+		for(int j = i+1; j <= dimension; j++) {
 			vetEdge[cont].distance = distance(arv->arraycity[i],arv->arraycity[j]);
 			vetEdge[cont].ori = i;
 			vetEdge[cont].dest = j;
@@ -47,8 +47,19 @@ int main(int argc, char const *argv[]){
 		}
 	}
 
-	for(int i = 1; i < cont; i++){
-		printf("%d ",vetEdge[i].distance);
+	/*
+	for(int i = 1; i < cont; i++) {
+		printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
+	}
+	*/
+
+	printf("Sortando os valores do vetor\n");
+	qsort(vetEdge, cont, sizeof(edge), compara);
+	printf("Valores do vetor sortados\n");
+
+
+	for(int i = 1; i <= cont-1; i++) {
+		printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
 	}
 
 

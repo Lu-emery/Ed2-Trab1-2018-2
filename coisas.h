@@ -37,3 +37,4 @@ Tsp* insereCity(Tsp*, city*);
 Tsp* criaTsp(char* , char* , char* , int );
 void imprimeTsp (Tsp* );
 int distance(city*, city*);
+int compara(const void* ,const void* );

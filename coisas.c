@@ -71,6 +71,16 @@ int distance(city* a, city* b){
     return dist;
 }
 
+int compara(const void* x, const void* y) {
+    int ret;
+
+    edge* edgeX = (edge*) x;
+    edge* edgeY = (edge*) y;
+
+    ///printf("Comparando as distâncias %d e %d\n", edgeX->distance, edgeY->distance);
+    ret = (edgeX->distance - edgeY->distance);
+    return ret;
+}
 /*
 * inputs:
 * outputs:
