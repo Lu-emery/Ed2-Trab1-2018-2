@@ -1,28 +1,5 @@
 #include "coisas.h"
 
-//city equivale a Cidade no problema
-struct city {
-    int index;
-    float x;
-    float y;
-};
-
-//TSP (travelling salesman problem)
-//ao decorrer do codigo iremos nos referir ao TSP
-//como travaler
-struct tsp{
-    char* type;
-    char* edgeWeightType;
-    char* nome;
-    int dimension;
-    city** arraycity;
-};
-
-struct edge{
-    int ori;
-    int dest;
-    
-}
 
 /* Insere city no TSP
 * inputs: trabaler, city
@@ -64,7 +41,7 @@ tipo de peso dos arcos (sempre sera EUC_2D), dimensão(quantidade de cidades)
 * pré-condicao: os campos enviados existem
 * pós-condicao: travaler alocado e preenchido com seus daods*/
 Tsp* criaTsp(char* nome, char* type, char* edgeWeightType, int dimension) {
-  Tsp* tsp = (Tsp*) malloc(sizeof(tsp));
+  Tsp* tsp = (Tsp*) malloc(sizeof(Tsp));
 
   tsp->arraycity = (city**) malloc( (dimension + 1)*sizeof(city*));
   tsp->nome = strdup(nome);
@@ -89,6 +66,10 @@ void imprimeTsp (Tsp* tsp) {
   printf("\n\n");
 }
 
+int distance(city* a, city* b){
+    int dist = sqrt( pow((a->x - b->x),2) + pow((a->y - b->y),2) );
+    return dist;
+}
 
 /*
 * inputs:

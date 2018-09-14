@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 #include "coisas.h"
 
 int main(int argc, char const *argv[]){
@@ -11,6 +7,7 @@ int main(int argc, char const *argv[]){
 	char type[10], edgeWeightType[20], nome[40],comentario[20];
 	int dimension;
 
+	//TSP
 	if (argc != 2) {
 		printf("Insira o nome do arquivo de entrada\n");
 		return 1;
@@ -31,13 +28,29 @@ int main(int argc, char const *argv[]){
 		int index;
 		float x, y;
 		fscanf(entrada, "%d %f %f\n", &index, &x, &y);
-		//FEZ UNS E PAROU //TESTE
+
 		insereCity(arv, criaCity(index, x, y) );
 	}
 	fclose(entrada);
 
+	//Edges
+	int cont = ( (dimension*dimension) - dimension)/2;
+	edge vetEdge[cont+1];
 
-	
+	cont=1;
+	for(int i = 1; i < dimension; i++){
+		for(int j = i+1; j <= dimension; j++){
+			vetEdge[cont].distance = distance(arv->arraycity[i],arv->arraycity[j]);
+			vetEdge[cont].ori = i;
+			vetEdge[cont].dest = j;
+			cont++;
+		}
+	}
+
+	for(int i = 1; i < cont; i++){
+		printf("%d ",vetEdge[i].distance);
+	}
+
 
 	return 0;
 }

@@ -1,5 +1,5 @@
 test: coisas.o Main.o
-	gcc -o exe coisas.o Main.o
+	gcc -o exe coisas.o Main.o -lm
 
 coisas.o:
 	gcc -c coisas.c

@@ -1,15 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct city city;
-typedef struct tsp Tsp;
-typedef struct edge edge;
+#include <math.h>
 
 
+//city equivale a Cidade no problema
+struct city {
+    int index;
+    float x;
+    float y;
+}typedef city;
 
-city* criaCity(int ind, float x, float y);
-void imprimeCity(city* p);
-Tsp* insereCity(Tsp* traveler, city* p);
-Tsp* criaTsp(char* nome, char* type, char* edgeWeightType, int dimension);
-void imprimeTsp (Tsp* tsp);
+//TSP (travelling salesman problem)
+//ao decorrer do codigo iremos nos referir ao TSP
+//como travaler
+struct tsp{
+    char* type;
+    char* edgeWeightType;
+    char* nome;
+    int dimension;
+    city** arraycity;
+}typedef Tsp;
+
+struct edge{
+    int distance;
+    int ori;
+    int dest;
+
+}typedef edge;
+
+
+
+city* criaCity(int , float, float);
+void imprimeCity(city* );
+Tsp* insereCity(Tsp*, city*);
+Tsp* criaTsp(char* , char* , char* , int );
+void imprimeTsp (Tsp* );
+int distance(city*, city*);
