@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
+#include "quick_find.h"
 
 //city equivale a Cidade no problema
 struct city {

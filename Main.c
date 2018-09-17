@@ -35,24 +35,64 @@ int main(int argc, char const *argv[]){
 
 	//Edges
 	int cont = ((dimension*dimension) - dimension)/2;
-	edge vetEdge[cont+1];
+	edge vetEdge[cont];
 
 	cont=1;
 	for(int i = 1; i < dimension; i++) {
 		for(int j = i+1; j <= dimension; j++) {
-			vetEdge[cont].distance = distance(arv->arraycity[i],arv->arraycity[j]);
+			vetEdge[cont].distance = distance(arv->arraycity[i], arv->arraycity[j]);
 			vetEdge[cont].ori = i;
 			vetEdge[cont].dest = j;
 			cont++;
 		}
 	}
 
+	printf("Sortando os valores do vetor\n");
+	qsort(vetEdge, cont, sizeof(edge), compara);
+	printf("Valores do vetor sortados\n");
+
+	//Quick find
+	int indice_find = 0;
+	// UF_init(dimension);
+	edge* vetEdgeTuor = (edge*)malloc(sizeof(edge)*(dimension - 1));
+
+
+	// for(int i = 1; i <= cont-1 && indice_find < dimension; i++) {
+		//printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
+		// if(UF_union(vetEdge[i].ori, vetEdge[i].dest)){
+			// vetEdgeTuor[indice_find] = vetEdge[i];
+			// indice_find++;
+		// }
+	// }
+
+	// for(int i = 0; i < indice_find; i++){
+		// printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdgeTuor[i].ori, vetEdgeTuor[i].dest, vetEdgeTuor[i].distance);
+	// }
+
+
 	/*
 	for(int i = 1; i < cont; i++) {
 		printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
 	}
-	*/
+	// */
+	// edge tour[52];
+	// int contador = 1;
+	// for (int i = 1; i <= dimension; i+=(dimension-contador)) {
+	// 	edge minimo = vetEdge[i];
+	// 	for (int j = 2; j <= (i-contador); j++) {
+	// 		if (vetEdge[j].distance < minimo.distance) {
+	// 			minimo = vetEdge[j];
+	// 		}
+	// 	}
+	// 	tour[contador] = minimo;
+	// 	contador++;
+	// }
+    //
+	// for(int i = 1; i < dimension; i++) {
+	// 	printf("[%d] A distância entre %d e %d é :%d \n", i, tour[i].ori, tour[i].dest, tour[i].distance); //TESTE
+	// }
 
+	/* Chora sort
 	printf("Sortando os valores do vetor\n");
 	qsort(vetEdge, cont, sizeof(edge), compara);
 	printf("Valores do vetor sortados\n");
@@ -61,6 +101,9 @@ int main(int argc, char const *argv[]){
 	for(int i = 1; i <= cont-1; i++) {
 		printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
 	}
+	*/
+
+
 
 
 	return 0;
