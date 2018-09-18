@@ -36,6 +36,11 @@ void imprimeCity(city* );
 Tsp* insereCity(Tsp*, city*);
 Tsp* criaTsp(char* , char* , char* , int );
 void imprimeTsp (Tsp* );
+
+//Edge
 int distance(city*, city*);
 int compara(const void* ,const void* );
+
+//Tour
+int prox_Tour(int , edge*, int);
 int contidoNoTour(int*, edge, int);

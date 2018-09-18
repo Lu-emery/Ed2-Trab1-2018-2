@@ -93,10 +93,7 @@ int prox_Tour(int ultimo, edge* arvMinima, int dimension ){
 int contidoNoTour(int* vetTour, edge e, int indice_tour ){
     //printf("test\n" );
     for(int i = 0; i <= indice_tour; i++){
-        if(vetTour[i] == e.ori){
-            vetTour[i].check = 1;
-            return 1;
-        }
+        if(vetTour[i] == e.ori) return 1;
     }
 
     return 0;
