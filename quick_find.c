@@ -5,8 +5,8 @@ static int* sz;
 static int N;
 
 void UF_init(int size) {
-    id = (int*)malloc(sizeof(int)+1);
-    sz = (int*)malloc(sizeof(int)+1);
+    id = (int*)malloc(sizeof(int)*size);
+    sz = (int*)malloc(sizeof(int)*size);
 
 
     for (int i = 0; i < size; i++) {

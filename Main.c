@@ -53,58 +53,80 @@ int main(int argc, char const *argv[]){
 
 	//Quick find
 	int indice_find = 0;
-	// UF_init(dimension);
-	edge* vetEdgeTuor = (edge*)malloc(sizeof(edge)*(dimension - 1));
+	UF_init(dimension);
+	edge* arvMinima = (edge*)malloc(sizeof(edge)*(dimension - 1));
 
 
-	// for(int i = 1; i <= cont-1 && indice_find < dimension; i++) {
+	for(int i = 1; i <= cont-1 && indice_find < dimension; i++) {
 		//printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
-		// if(UF_union(vetEdge[i].ori, vetEdge[i].dest)){
-			// vetEdgeTuor[indice_find] = vetEdge[i];
-			// indice_find++;
-		// }
-	// }
+		if(UF_union(vetEdge[i].ori, vetEdge[i].dest)){
+			arvMinima[indice_find] = vetEdge[i];
+			indice_find++;
+		}
+	}
 
-	// for(int i = 0; i < indice_find; i++){
-		// printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdgeTuor[i].ori, vetEdgeTuor[i].dest, vetEdgeTuor[i].distance);
-	// }
+	char saidaMst[strlen(arv->nome)+5];
+	strcpy(saidaMst, arv->nome);
+	printf("%s\n", saidaMst);
+	strcat(saidaMst, ".mst");
+	printf("%s\n", saidaMst);
+
+	FILE* arqMst = fopen(saidaMst, "w");
+	if (arqMst == NULL) {
+		printf("Deu treta, corre\n");
+		exit(1);
+	}
+	fprintf(arqMst, "NAME: %s\nTYPE: MST\nDIMENSION: %d\nMST_SECTION\n", arv->nome, dimension);
+	for(int i = 0; i < dimension; i++) {
+		fprintf(arqMst, "%d %d", arvMinima[i].ori, arvMinima[i].dest); //TESTE
+	} //TESTE
+
+	fclose(arqMst);
+
 
 
 	/*
-	for(int i = 1; i < cont; i++) {
-		printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
-	}
-	// */
-	// edge tour[52];
-	// int contador = 1;
-	// for (int i = 1; i <= dimension; i+=(dimension-contador)) {
-	// 	edge minimo = vetEdge[i];
-	// 	for (int j = 2; j <= (i-contador); j++) {
-	// 		if (vetEdge[j].distance < minimo.distance) {
-	// 			minimo = vetEdge[j];
-	// 		}
-	// 	}
-	// 	tour[contador] = minimo;
-	// 	contador++;
-	// }
-    //
-	// for(int i = 1; i < dimension; i++) {
-	// 	printf("[%d] A distância entre %d e %d é :%d \n", i, tour[i].ori, tour[i].dest, tour[i].distance); //TESTE
-	// }
-
-	/* Chora sort
-	printf("Sortando os valores do vetor\n");
-	qsort(vetEdge, cont, sizeof(edge), compara);
-	printf("Valores do vetor sortados\n");
-
-
-	for(int i = 1; i <= cont-1; i++) {
-		printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
-	}
+	NAME: berlin52
+	TYPE: MST
+	DIMENSION: 52
+	MST_SECTION
+	35 36
 	*/
+
+
 
 
 
 
 	return 0;
 }
+
+//COdigos antigos
+//
+// edge tour[52];
+// int contador = 1;
+// for (int i = 1; i <= dimension; i+=(dimension-contador)) {
+// 	edge minimo = vetEdge[i];
+// 	for (int j = 2; j <= (i-contador); j++) {
+// 		if (vetEdge[j].distance < minimo.distance) {
+// 			minimo = vetEdge[j];
+// 		}
+// 	}
+// 	tour[contador] = minimo;
+// 	contador++;
+// }
+//
+// for(int i = 1; i < dimension; i++) {
+// 	printf("[%d] A distância entre %d e %d é :%d \n", i, tour[i].ori, tour[i].dest, tour[i].distance); //TESTE
+// }
+
+/* Chora sort
+printf("Sortando os valores do vetor\n");
+qsort(vetEdge, cont, sizeof(edge), compara);
+printf("Valores do vetor sortados\n");
+
+
+for(int i = 1; i <= cont-1; i++) {
+	printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
+}
+*/
