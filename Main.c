@@ -43,6 +43,7 @@ int main(int argc, char const *argv[]){
 			vetEdge[cont].distance = distance(arv->arraycity[i], arv->arraycity[j]);
 			vetEdge[cont].ori = i;
 			vetEdge[cont].dest = j;
+			vetEdge[cont].check = 0;
 			cont++;
 		}
 	}
@@ -64,24 +65,47 @@ int main(int argc, char const *argv[]){
 			indice_find++;
 		}
 	}
+	int vetTour[dimension];
+	int indice_tour = 1;
 
-	char saidaMst[strlen(arv->nome)+5];
-	strcpy(saidaMst, arv->nome);
-	printf("%s\n", saidaMst);
-	strcat(saidaMst, ".mst");
-	printf("%s\n", saidaMst);
+	vetTour[0] = arvMinima[0].ori;
+	vetTour[1] = arvMinima[0].dest;
 
-	FILE* arqMst = fopen(saidaMst, "w");
-	if (arqMst == NULL) {
-		printf("Deu treta, corre\n");
-		exit(1);
+	printf("%d\n%d\n",vetTour[0], vetTour[1] );
+
+	for(int i = 1; indice_tour < dimension; i++) {
+		//printf("%d %d\n", arvMinima[i].ori, arvMinima[i].dest);
+
+
+		//aresta back
+		if( contidoNoTour(vetTour, arvMinima[i], indice_tour) ){
+			indice_tour++;
+			vetTour[indice_tour] = arvMinima[i].dest;
+			printf("%d\n", vetTour[indice_tour]);
+			if(i >= dimension){
+				i = 0;
+			}
+		}
+
 	}
-	fprintf(arqMst, "NAME: %s\nTYPE: MST\nDIMENSION: %d\nMST_SECTION\n", arv->nome, dimension);
-	for(int i = 0; i < dimension; i++) {
-		fprintf(arqMst, "%d %d", arvMinima[i].ori, arvMinima[i].dest); //TESTE
-	} //TESTE
 
-	fclose(arqMst);
+	// char saidaMst[strlen(arv->nome)+5];
+	// strcpy(saidaMst, arv->nome);
+	// printf("%s\n", saidaMst);
+	// strcat(saidaMst, ".mst");
+	// printf("%s\n", saidaMst);
+    //
+	// FILE* arqMst = fopen(saidaMst, "w");
+	// if (arqMst == NULL) {
+	// 	printf("Deu treta, corre\n");
+	// 	exit(1);
+	// }
+	// fprintf(arqMst, "NAME: %s\nTYPE: MST\nDIMENSION: %d\nMST_SECTION\n", arv->nome, dimension);
+	// for(int i = 0; i < dimension; i++) {
+	// 	fprintf(arqMst, "%d %d", arvMinima[i].ori, arvMinima[i].dest); //TESTE
+	// } //TESTE
+    //
+	// fclose(arqMst);
 
 
 

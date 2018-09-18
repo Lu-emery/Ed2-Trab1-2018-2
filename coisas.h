@@ -26,7 +26,7 @@ struct edge{
     int distance;
     int ori;
     int dest;
-
+    int check;
 }typedef edge;
 
 
@@ -38,3 +38,4 @@ Tsp* criaTsp(char* , char* , char* , int );
 void imprimeTsp (Tsp* );
 int distance(city*, city*);
 int compara(const void* ,const void* );
+int contidoNoTour(int*, edge, int);

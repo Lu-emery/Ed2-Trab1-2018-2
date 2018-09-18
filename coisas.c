@@ -81,8 +81,84 @@ int compara(const void* x, const void* y) {
     ret = (edgeX->distance - edgeY->distance);
     return ret;
 }
+
+int prox_Tour(int ultimo, edge* arvMinima, int dimension ){
+    for(int i = 0; i < dimension; i++){
+        if(arvMinima[i].ori == i) return 1;
+    }
+
+    return 0;
+}
+
+int contidoNoTour(int* vetTour, edge e, int indice_tour ){
+    //printf("test\n" );
+    for(int i = 0; i <= indice_tour; i++){
+        if(vetTour[i] == e.ori){
+            vetTour[i].check = 1;
+            return 1;
+        }
+    }
+
+    return 0;
+}
 /*
 * inputs:
 * outputs:
 * pré-condicao:
-* pós-condicao:*/
+* pós-condicao:
+
+
+
+24 48
+35 36
+34 35
+5 15
+5 24
+5 6
+20 50
+38 40
+37 40
+39 40
+36 39
+24 38
+2 7
+1 22
+5 48
+38 48
+32 49
+15 24
+6 24
+34 39
+37 48
+15 38
+1 49
+8 41
+4 6
+6 48
+15 48
+19 45
+7 42
+34 37
+24 40
+18 31
+34 44
+40 48
+36 49
+9 10
+35 49
+36 37
+36 40
+6 38
+1 32
+15 40
+19 41
+34 40
+22 49
+20 23
+35 44
+15 37
+4 5
+22 31
+34 49
+4 25
+*/
