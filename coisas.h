@@ -9,38 +9,41 @@ struct city {
     int index;
     float x;
     float y;
-}typedef city;
+} typedef City;
 
 //TSP (travelling salesman problem)
-//ao decorrer do codigo iremos nos referir ao TSP
-//como travaler
+//Também contém os elementos da entrada
 struct tsp{
     char* type;
     char* edgeWeightType;
     char* nome;
     int dimension;
-    city** arraycity;
-}typedef Tsp;
+    City** arrayCity;
+} typedef Tsp;
 
 struct edge{
     int distance;
     int ori;
     int dest;
     int check;
-}typedef edge;
+} typedef Edge;
 
 
-
-city* criaCity(int , float, float);
-void imprimeCity(city* );
-Tsp* insereCity(Tsp*, city*);
+//TSP
+City* criaCity(int , float, float);
+void imprimeCity(City* );
+Tsp* insereCity(Tsp*, City*);
 Tsp* criaTsp(char* , char* , char* , int );
 void imprimeTsp (Tsp* );
 
 //Edge
-int distance(city*, city*);
+int distance(City*, City*);
 int compara(const void* ,const void* );
 
 //Tour
-int prox_Tour(int , edge*, int);
-int contidoNoTour(int*, edge, int);
+int prox_Tour(int , Edge*, int);
+int contidoNoTour(int*, Edge, int);
+
+//Auxiliares
+Tsp* leArquivo(FILE*, Tsp*);
+Edge* criaVetorAresta(Tsp*, int);

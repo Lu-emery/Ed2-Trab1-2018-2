@@ -1,103 +1,162 @@
 #include "coisas.h"
 
+//TSP
 
-/* Insere city no TSP
-* inputs: trabaler, city
-* outputs:  nenhum
-* pré-condicao: existencia e alocação do trabaler e do city, indice valido
-* pós-condicao: city registrado no travaler no indice do mesmo -1
-pois a primeira cidade será sempre a cidade 1*/
-Tsp* insereCity (Tsp* traveler, city* p) {
-    traveler->arraycity[(p->index)] = p;
-    return traveler;
-}
-
-/* Cria city
-* inputs: Numero da cidade, coordenadas x e y
-* outputs: city devidamente alocado
-* pré-condicao: os campos enviados existem
-* pós-condicao: city criado*/
-city* criaCity(int ind, float x, float y) {
-  city* p = (city*) malloc(sizeof(p));
-  p->index = ind;
-  p->x = x;
-  p->y = y;
-  return p;
-}
-
-/* Imprime city
-* inputs: city que deve ser impresso
-* outputs: nenhum
-* pré-condicao: city devidadmente alocado
-* pós-condicao: dados referentes ao city printados na tela*/
-void imprimeCity(city* p) {
-  printf("city índice: %d | X=%.1f | Y=%.1f \n", p->index, p->x, p->y);
-}
-
-/*Aloca e preenche os dados do travaler
-* inputs: nome, tipo de grafo dado por entrada(sempre sera TSP),
-tipo de peso dos arcos (sempre sera EUC_2D), dimensão(quantidade de cidades)
-* outputs: travaler alocado e preenchido com seus daods
-* pré-condicao: os campos enviados existem
-* pós-condicao: travaler alocado e preenchido com seus daods*/
-Tsp* criaTsp(char* nome, char* type, char* edgeWeightType, int dimension) {
-  Tsp* tsp = (Tsp*) malloc(sizeof(Tsp));
-
-  tsp->arraycity = (city**) malloc( (dimension + 1)*sizeof(city*));
-  tsp->nome = strdup(nome);
-  tsp->type = strdup(type);
-  tsp->edgeWeightType = strdup(edgeWeightType);
-  tsp->dimension = dimension;
-
-  return tsp;
-}
-
-/* Printa na tela o travaler e seus city
-* inputs: travaler
-* outputs: nenhum
-* pré-condicao: travaler devidamente alocado e preenchido
-* pós-condicao: dados do travaler printados na tela*/
-void imprimeTsp (Tsp* tsp) {
-  int dimension = tsp->dimension;
-  printf("Name: %s \nTYPE: %s  \nEdge: %s \nDimension: %d \n", tsp->nome, tsp->type, tsp->edgeWeightType, dimension);
-  for (int i = 1; i <= dimension; i++) {
-    imprimeCity(tsp->arraycity[i]);
+  /* Insere City no TSP
+  * inputs: trabaler, city
+  * outputs:  nenhum
+  * pré-condicao: existencia e alocação do trabaler e do city, indice valido
+  * pós-condicao: City registrado no traveler no indice do mesmo -1
+  pois a primeira cidade será sempre a cidade 1*/
+  Tsp* insereCity (Tsp* tsp, City* p) {
+      tsp->arrayCity[(p->index)] = p;
+      return tsp;
   }
-  printf("\n\n");
-}
 
-int distance(city* a, city* b){
-    int dist = sqrt( pow((a->x - b->x),2) + pow((a->y - b->y),2) );
-    return dist;
-}
+  /* Cria city
+  * inputs: Numero da cidade, coordenadas x e y
+  * outputs: City devidamente alocado
+  * pré-condicao: os campos enviados existem
+  * pós-condicao: City criado*/
+  City* criaCity(int ind, float x, float y) {
+    City* p = (City*) malloc(sizeof(p));
+    p->index = ind;
+    p->x = x;
+    p->y = y;
+    return p;
+  }
 
-int compara(const void* x, const void* y) {
-    int ret;
+  /* Imprime city
+  * inputs: City que deve ser impresso
+  * outputs: nenhum
+  * pré-condicao: City devidadmente alocado
+  * pós-condicao: dados referentes ao City printados na tela*/
+  void imprimeCity(City* p) {
+    printf("City índice: %d | X=%.1f | Y=%.1f \n", p->index, p->x, p->y);
+  }
 
-    edge* edgeX = (edge*) x;
-    edge* edgeY = (edge*) y;
+  /*Aloca e preenche os dados do traveler
+  * inputs: nome, tipo de grafo dado por entrada(sempre sera TSP),
+  tipo de peso dos arcos (sempre sera EUC_2D), dimensão(quantidade de cidades)
+  * outputs: traveler alocado e preenchido com seus daods
+  * pré-condicao: os campos enviados existem
+  * pós-condicao: traveler alocado e preenchido com seus daods*/
+  Tsp* criaTsp(char* nome, char* type, char* edgeWeightType, int dimension) {
+    Tsp* tsp = (Tsp*) malloc(sizeof(Tsp));
 
-    ///printf("Comparando as distâncias %d e %d\n", edgeX->distance, edgeY->distance);
-    ret = (edgeX->distance - edgeY->distance);
-    return ret;
-}
+    tsp->arrayCity = (City**) malloc((dimension + 1)*sizeof(City*));
+    tsp->nome = strdup(nome);
+    tsp->type = strdup(type);
+    tsp->edgeWeightType = strdup(edgeWeightType);
+    tsp->dimension = dimension;
 
-int prox_Tour(int ultimo, edge* arvMinima, int dimension ){
-    for(int i = 0; i < dimension; i++){
-        if(arvMinima[i].ori == i) return 1;
+    return tsp;
+  }
+
+  /* Printa na tela o traveler e seus city
+  * inputs: traveler
+  * outputs: nenhum
+  * pré-condicao: traveler devidamente alocado e preenchido
+  * pós-condicao: dados do traveler printados na tela*/
+  void imprimeTsp (Tsp* tsp) {
+    int dimension = tsp->dimension;
+    printf("Name: %s \nTYPE: %s  \nEdge: %s \nDimension: %d \n", tsp->nome, tsp->type, tsp->edgeWeightType, dimension);
+    for (int i = 1; i <= dimension; i++) {
+      imprimeCity(tsp->arrayCity[i]);
+    }
+    printf("\n\n");
+  }
+
+
+
+//EDGE
+
+  int distance(City* a, City* b){
+      int dist = sqrt( pow((a->x - b->x),2) + pow((a->y - b->y),2) );
+      return dist;
+  }
+
+  int compara(const void* x, const void* y) {
+      int ret;
+
+      Edge* edgeX = (Edge*) x;
+      Edge* edgeY = (Edge*) y;
+
+      ///printf("Comparando as distâncias %d e %d\n", edgeX->distance, edgeY->distance);
+      ret = (edgeX->distance - edgeY->distance);
+      return ret;
+  }
+
+
+
+//TOUR
+
+  int prox_Tour(int ultimo, Edge* arvMinima, int dimension ){
+      for(int i = 0; i < dimension; i++){
+          if(arvMinima[i].ori == i) return 1;
+      }
+
+      return 0;
+  }
+
+  int contidoNoTour(int* vetTour, Edge e, int indice_tour ){
+      //printf("test\n" );
+      for(int i = 0; i <= indice_tour; i++){
+          if(vetTour[i] == e.ori) return 1;
+      }
+
+      return 0;
+  }
+
+
+
+//AUXILIARES
+
+  Tsp* leArquivo(FILE* entrada, Tsp* arv) {
+    char type[10], edgeWeightType[20], nome[40],comentario[20];
+    int dimension;
+
+    fscanf(entrada, "NAME: %s\n", nome);
+
+    while (strcmp(comentario, "TYPE:") != 0) {
+      //printf("ignorando o comentario\n");
+      fscanf(entrada, "%s", comentario);
     }
 
-    return 0;
-}
+    fscanf(entrada, " %s\nDIMENSION: %d\nEDGE_WEIGHT_TYPE: %s\nNODE_COORD_SECTION\n", type, &dimension, edgeWeightType);
+    arv = criaTsp(nome, type, edgeWeightType, dimension);
 
-int contidoNoTour(int* vetTour, edge e, int indice_tour ){
-    //printf("test\n" );
-    for(int i = 0; i <= indice_tour; i++){
-        if(vetTour[i] == e.ori) return 1;
+    for (int i = 0; i <= dimension; ++i) {
+      int index;
+      float x, y;
+      fscanf(entrada, "%d %f %f\n", &index, &x, &y);
+
+      insereCity(arv, criaCity(index, x, y));
+    }
+    return arv;
+  }
+
+  Edge* criaVetorAresta(Tsp* arv, int tam) {
+    Edge* vetEdge = (Edge*) malloc(tam*sizeof(Edge));
+
+    int cont = 1;
+    for(int i = 1; i < arv->dimension; i++) {
+      for(int j = i+1; j <= arv->dimension; j++) {
+        vetEdge[cont].distance = distance(arv->arrayCity[i], arv->arrayCity[j]);
+        vetEdge[cont].ori = i;
+        vetEdge[cont].dest = j;
+        vetEdge[cont].check = 0;
+        cont++;
+      }
     }
 
-    return 0;
-}
+    printf("Sortando os valores do vetor\n");
+    qsort(vetEdge, tam, sizeof(Edge), compara);
+    printf("Valores do vetor sortados\n");
+
+    return vetEdge;
+  }
+
 /*
 * inputs:
 * outputs:
