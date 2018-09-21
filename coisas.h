@@ -33,15 +33,15 @@ struct edge{
 City* criaCity(int , float, float);
 void imprimeCity(City* );
 Tsp* insereCity(Tsp*, City*);
-Tsp* criaTsp(char* , char* , char* , int );
+Tsp* criaTsp(char*, char*, char*, int );
 void imprimeTsp (Tsp* );
 
 //Edge
 int distance(City*, City*);
-int compara(const void* ,const void* );
+int compara(const void*, const void* );
 
 //Tour
-int prox_Tour(int , Edge*, int);
+int prox_Tour(int, Edge*, int);
 int contidoNoTour(int*, Edge, int);
 
 //Auxiliares
