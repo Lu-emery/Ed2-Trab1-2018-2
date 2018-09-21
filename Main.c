@@ -32,29 +32,34 @@ int main(int argc, char const *argv[]){
 			indice_find++;
 		}
 	}
-	int vetTour[arv->dimension];
-	int indice_tour = 1;
 
-	vetTour[0] = arvMinima[0].ori;
-	vetTour[1] = arvMinima[0].dest;
-
-	printf("%d\n%d\n",vetTour[0], vetTour[1] );
-
-	for(int i = 1; indice_tour < arv->dimension; i++) {
-		//printf("%d %d\n", arvMinima[i].ori, arvMinima[i].dest);
-
-
-		//aresta back
-		if(contidoNoTour(vetTour, arvMinima[i], indice_tour)) {
-			indice_tour++;
-			vetTour[indice_tour] = arvMinima[i].dest;
-			printf("%d\n", vetTour[indice_tour]);
-			if(i >= arv->dimension){
-				i = 0;
-			}
-		}
-
+	for(int i = 0; i <= indice_find; i++ ){
+		printf("%d %d\n", arvMinima[i].ori, arvMinima[i].dest);
 	}
+
+	// int vetTour[arv->dimension];
+	// int indice_tour = 1;
+	//
+	// vetTour[0] = arvMinima[0].ori;
+	// vetTour[1] = arvMinima[0].dest;
+	//
+	// printf("%d\n%d\n",vetTour[0], vetTour[1] );
+	//
+	// for(int i = 1; indice_tour < arv->dimension; i++) {
+	// 	printf("%d %d\n", arvMinima[i].ori, arvMinima[i].dest);
+	//
+	//
+	// 	//aresta back
+	// 	if(contidoNoTour(vetTour, arvMinima[i], indice_tour)) {
+	// 		indice_tour++;
+	// 		vetTour[indice_tour] = arvMinima[i].dest;
+	// 		printf("%d\n", vetTour[indice_tour]);
+	// 		if(i >= arv->dimension){
+	// 			i = 0;
+	// 		}
+	// 	}
+	//
+	// }
 
 	/*
 	char saidaMst[strlen(arv->nome)+5];

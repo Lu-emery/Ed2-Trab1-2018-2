@@ -137,7 +137,7 @@
   }
 
   Edge* criaVetorAresta(Tsp* arv, int tam) {
-    Edge* vetEdge = (Edge*) malloc(tam*sizeof(Edge));
+    Edge* vetEdge = (Edge*)malloc((tam+1)*sizeof(Edge));
 
     int cont = 1;
     for(int i = 1; i < arv->dimension; i++) {
@@ -149,6 +149,8 @@
         cont++;
       }
     }
+
+    //printf("%d\n",cont );
 
     printf("Sortando os valores do vetor\n");
     qsort(vetEdge, tam, sizeof(Edge), compara);
