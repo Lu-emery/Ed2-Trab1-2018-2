@@ -4,46 +4,69 @@
 #include <math.h>
 #include "quick_find.h"
 
-//city equivale a Cidade no problema
-struct city {
-    int index;
-    float x;
-    float y;
-} typedef City;
+//STRUCTS
+  typedef struct city City;
+  typedef struct tsp Tsp;
+  typedef struct edge Edge;
+  typedef struct adjacencia Adjacencia;
+  typedef struct vertice Vertice;
 
-//TSP (travelling salesman problem)
-//Também contém os elementos da entrada
-struct tsp{
-    char* type;
-    char* edgeWeightType;
-    char* nome;
-    int dimension;
-    City** arrayCity;
-} typedef Tsp;
+  //city equivale a Cidade no problema
+  struct city {
+      int index;
+      float x;
+      float y;
+  };
 
-struct edge{
-    int distance;
-    int ori;
-    int dest;
-    int check;
-} typedef Edge;
+  //TSP (travelling salesman problem)
+  //Também contém os elementos da entrada
+  struct tsp {
+      char* type;
+      char* edgeWeightType;
+      char* nome;
+      int dimension;
+      City** arrayCity;
+  };
+
+  struct edge {
+      int distance;
+      int ori;
+      int dest;
+      int check;
+  };
+
+  struct adjacencia {
+    Vertice* vertice;
+    Adjacencia* prox;
+  };
+
+  struct vertice {
+    int indice;
+    int cor;
+    Adjacencia* pilhaAdjacentes;
+  };
 
 
 //TSP
-City* criaCity(int , float, float);
-void imprimeCity(City* );
-Tsp* insereCity(Tsp*, City*);
-Tsp* criaTsp(char*, char*, char*, int );
-void imprimeTsp (Tsp* );
+  City* criaCity(int, float, float);
+  void imprimeCity(City*);
+  Tsp* insereCity(Tsp*, City*);
+  Tsp* criaTsp(char*, char*, char*, int );
+  void imprimeTsp (Tsp*);
 
 //Edge
-int distance(City*, City*);
-int compara(const void*, const void* );
+  int distance(City*, City*);
+  int compara(const void*, const void*);
 
-//Tour
-int prox_Tour(int, Edge*, int);
-int contidoNoTour(int*, Edge, int);
+//Vertice de adjacência
+  Vertice** preencheVetorVertice(Edge*, int);
+  void insereEmVetorVertices(Vertice**, Edge);
+  Adjacencia* criaAdjacencia(Vertice*);
 
 //Auxiliares
-Tsp* leArquivo(FILE*, Tsp*);
-Edge* criaVetorAresta(Tsp*, int);
+  Tsp* leArquivo(FILE*, Tsp*);
+  Edge* criaVetorAresta(Tsp*, int);
+
+ //TOUR
+  // int* DFS(Vertice**, int);
+  // void DFS_Visit(Vertice*);

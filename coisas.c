@@ -18,7 +18,7 @@
   * outputs: City devidamente alocado
   * pré-condicao: os campos enviados existem
   * pós-condicao: City criado*/
-  City* criaCity(int ind, float x, float y) {
+  City* criaCity (int ind, float x, float y) {
     City* p = (City*) malloc(sizeof(p));
     p->index = ind;
     p->x = x;
@@ -31,7 +31,7 @@
   * outputs: nenhum
   * pré-condicao: City devidadmente alocado
   * pós-condicao: dados referentes ao City printados na tela*/
-  void imprimeCity(City* p) {
+  void imprimeCity (City* p) {
     printf("City índice: %d | X=%.1f | Y=%.1f \n", p->index, p->x, p->y);
   }
 
@@ -66,17 +66,17 @@
     }
     printf("\n\n");
   }
-
+//
 
 
 //EDGE
 
-  int distance(City* a, City* b){
+  int distance (City* a, City* b){
       int dist = sqrt( pow((a->x - b->x),2) + pow((a->y - b->y),2) );
       return dist;
   }
 
-  int compara(const void* x, const void* y) {
+  int compara (const void* x, const void* y) {
       int ret;
 
       Edge* edgeX = (Edge*) x;
@@ -89,30 +89,70 @@
 
 
 
-//TOUR
+//Vertice adj
+  Vertice** preencheVetorVertice (Edge* arvMinima, int dimension) {
+      Vertice** vetorVertice = (Vertice**) calloc(dimension, sizeof(Vertice*));
 
-  int prox_Tour(int ultimo, Edge* arvMinima, int dimension ){
+
       for(int i = 0; i < dimension; i++){
-          if(arvMinima[i].ori == i) return 1;
+          insereEmVetorVertices(vetorVertice, arvMinima[i]);
       }
 
-      return 0;
+      return vetorVertice;
   }
 
-  int contidoNoTour(int* vetTour, Edge e, int indice_tour ){
-      //printf("test\n" );
-      for(int i = 0; i <= indice_tour; i++){
-          if(vetTour[i] == e.ori) return 1;
-      }
-
-      return 0;
+  void insereEmVetorVertices (Vertice** vet, Edge entrada) {
+    int indiceOri = entrada.ori;
+    int indiceDest = entrada.dest;
+    //Checa se Ori existe
+    if (vet[indiceOri] == NULL) {
+      // printf("Criou um vertice origem [%d]\n", indiceOri);
+      vet[indiceOri] = malloc(sizeof(Vertice));
+      vet[indiceOri]->indice = indiceOri;
+      vet[indiceOri]->pilhaAdjacentes = NULL;
+    }
+    //Checa se Dest existe
+    if (vet[indiceDest] == NULL) {
+      // printf("Criou um vertice destino [%d]\n", indiceDest);
+      vet[indiceDest] = malloc(sizeof(Vertice));
+      vet[indiceDest]->indice = indiceDest;
+      vet[indiceDest]->pilhaAdjacentes = NULL;
+    }
+    //Cria a estrutura Adjacência do vértice destino
+    Adjacencia* a = criaAdjacencia(vet[indiceDest]);
+    //Faz ele ser o primeiro elemento da pilha de adjacência do vértice origem
+    a->prox = vet[indiceOri]->pilhaAdjacentes;
+    vet[indiceOri]->pilhaAdjacentes = a;
+    a = criaAdjacencia(vet[indiceOri]);
+    a->prox = vet[indiceDest]->pilhaAdjacentes;
+    vet[indiceDest]->pilhaAdjacentes = a;
+    //printf("Vertice Teste %d\n", vet[indiceOri]->pilhaAdjacentes->vertice->indice);
   }
 
+  Adjacencia* criaAdjacencia (Vertice* vert) {
+    Adjacencia* a = (Adjacencia*) malloc(sizeof(Adjacencia));
+    a->vertice = vert;
+    a->prox = NULL;
+    return a;
+  }
+
+ //Tour
+   // int* DFS(Vertice** vet, int dimension){
+   //   for(int i = 0; i < dimension; i++){
+   //     vet[i].cor = 1;
+   //   }
+   //
+   //
+   // }
+   //
+   // void DFS_Visit(Vertice* vert){
+   //   while
+   // }
 
 
 //AUXILIARES
 
-  Tsp* leArquivo(FILE* entrada, Tsp* arv) {
+  Tsp* leArquivo (FILE* entrada, Tsp* arv) {
     char type[10], edgeWeightType[20], nome[40],comentario[20];
     int dimension;
 
@@ -136,7 +176,7 @@
     return arv;
   }
 
-  Edge* criaVetorAresta(Tsp* arv, int tam) {
+  Edge* criaVetorAresta (Tsp* arv, int tam) {
     Edge* vetEdge = (Edge*)malloc((tam+1)*sizeof(Edge));
 
     int cont = 1;
@@ -158,65 +198,3 @@
 
     return vetEdge;
   }
-
-/*
-* inputs:
-* outputs:
-* pré-condicao:
-* pós-condicao:
-
-
-
-24 48
-35 36
-34 35
-5 15
-5 24
-5 6
-20 50
-38 40
-37 40
-39 40
-36 39
-24 38
-2 7
-1 22
-5 48
-38 48
-32 49
-15 24
-6 24
-34 39
-37 48
-15 38
-1 49
-8 41
-4 6
-6 48
-15 48
-19 45
-7 42
-34 37
-24 40
-18 31
-34 44
-40 48
-36 49
-9 10
-35 49
-36 37
-36 40
-6 38
-1 32
-15 40
-19 41
-34 40
-22 49
-20 23
-35 44
-15 37
-4 5
-22 31
-34 49
-4 25
-*/

@@ -2,7 +2,6 @@
 
 static int* id;
 static int* sz;
-static int N;
 
 void UF_init(int size) {
     id = (int*)malloc(sizeof(int)*size);
@@ -17,7 +16,11 @@ void UF_init(int size) {
 }
 
 int UF_find(int p) {
-    return id[p]; // Retorna o id da componente de p. 1 acesso.
+  while (p != id[p]) {
+    id[p] = id[id[p]];
+    p = id[p];
+  }
+    return p; // Retorna o id da componente de p. 1 acesso.
 }
 
 int UF_union(int p, int q){
