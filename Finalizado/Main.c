@@ -19,7 +19,7 @@ int main(int argc, char const *argv[]){
 	}
 
 	//MST
-	Mst* arv = (Mst*) malloc(sizeof(Mst));
+	Mst* arv;
 	arv = leArquivo(entrada, arv);
 
 	fclose(entrada);
@@ -38,7 +38,7 @@ int main(int argc, char const *argv[]){
 
 	for(int i = 1; i <= tam && indice_find <= (arv->dimension-1); i++) {
 		//printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
-		if(UF_union(vetEdge[i].ori, vetEdge[i].dest)){
+		if(UF_union(vetEdge[i].ori, vetEdge[i].dest)) {
 			arvMinima[indice_find] = vetEdge[i];
 			indice_find++;
 		}
@@ -91,6 +91,25 @@ int main(int argc, char const *argv[]){
 
 	fclose(saidaTour);
 	free(saidaTourNome);
+
+	printf("Preparando para dar free na UF\n\n");
+	UF_free();
+	printf("UF liberada com sucesso\n\n\n\n");
+	printf("Preparando para dar free nos vértices\n\n");
+	vertices = freeVetorVertices(vertices, arv->dimension);
+	printf("Vertices liberados com sucesso\n\n\n\n");
+	printf("Preparando para dar free no vetEdge\n\n");
+	free(vetEdge);
+	vetEdge = NULL;
+	printf("VetEdge liberado com sucesso\n\n\n\n");
+	printf("Preparando para dar free na arvMinima\n\n");
+	free(arvMinima);
+	arvMinima = NULL;
+	printf("ArvMinima liberada com sucesso\n\n\n\n");
+	printf("Preparando p-ara dar free na MST\n\n");
+	arv = freeMst(arv);
+	printf("MST liberada com sucesso\n\n\n\n");
+
 
 	return 0;
 }

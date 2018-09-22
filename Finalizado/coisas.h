@@ -76,3 +76,7 @@
   void DFS(Vertice**, int, FILE*);
   void DFS_Visit(Vertice*, FILE*);
   void imprimeTour(Vertice**, Mst*, FILE*);
+
+  //free
+  Mst* freeMst(Mst*);
+  Vertice** freeVetorVertices(Vertice**, int);

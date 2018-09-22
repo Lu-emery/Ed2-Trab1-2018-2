@@ -86,13 +86,9 @@
 //VERTICES E ADJACÊNCIAS
   Vertice** preencheVetorVertice (Edge* arvMinima, int dimension) {
       Vertice** vetorVertice = (Vertice**) calloc(dimension+1, sizeof(Vertice*));
-
-
-      for(int i = 0; i < dimension-1; i++){
-          //printf("[%d]\n", i);
+      for(int i = 0; i < dimension-1; i++) {
           insereEmVetorVertices(vetorVertice, arvMinima[i]);
       }
-
       return vetorVertice;
   }
 
@@ -136,37 +132,36 @@
 
  //TOUR
 
-   void DFS (Vertice** vet, int dimension, FILE* saida) {
-     for(int i = 1; i <= dimension; i++){
-       vet[i]->cor = branco;
-     }
+  void DFS (Vertice** vet, int dimension, FILE* saida) {
+    for(int i = 1; i <= dimension; i++){
+      vet[i]->cor = branco;
+    }
+      DFS_Visit(vet[1], saida);
+    }
 
-    DFS_Visit(vet[1], saida);
-   }
+  void DFS_Visit (Vertice* vert, FILE* saida) {
+    fprintf(saida, "%d\n", vert->indice);
+    vert->cor = cinza;
+    Adjacencia* aux = vert->pilhaAdjacentes;
 
-   void DFS_Visit (Vertice* vert, FILE* saida) {
-     fprintf(saida, "%d\n", vert->indice);
-     vert->cor = cinza;
-     Adjacencia* aux = vert->pilhaAdjacentes;
+    while(aux != NULL) {
+      if(aux->vertice->cor == branco) {
+        DFS_Visit(aux->vertice, saida);
+      }
+    aux = aux->prox;
+  }
 
-     while(aux != NULL){
-         if(aux->vertice->cor == branco){
-             DFS_Visit(aux->vertice, saida);
-         }
-         aux = aux->prox;
-     }
-
-     vert->cor = preto;
-   }
+    vert->cor = preto;
+  }
 
    void imprimeTour (Vertice** vet, Mst* mst, FILE* saida) {
 
-       //Imprime cabeçalho
-       fprintf(saida, "Name: %s \nTYPE: Tour  \nEdge: %s \nDimension: %d \nTour_SECTION \n", mst->nome, mst->edgeWeightType, mst->dimension);
+     //Imprime cabeçalho
+     fprintf(saida, "Name: %s \nTYPE: Tour  \nEdge: %s \nDimension: %d \nTour_SECTION \n", mst->nome, mst->edgeWeightType, mst->dimension);
 
-       DFS(vet, mst->dimension, saida);
-       fprintf(saida,"EOF\n");
-       printf("Tour imprimido com sucesso\n");
+     DFS(vet, mst->dimension, saida);
+     fprintf(saida,"EOF\n");
+     printf("Tour imprimido com sucesso\n");
 
 
    }
@@ -175,7 +170,7 @@
 //AUXILIARES
 
   Mst* leArquivo (FILE* entrada, Mst* arv) {
-    char type[10], edgeWeightType[20], nome[40],comentario[20];
+    char type[10], edgeWeightType[20], nome[40], comentario[20];
     int dimension;
 
     fscanf(entrada, "NAME: %s\n", nome);
@@ -220,17 +215,31 @@
   }
 
   //free all
-  // void free_Mst(Mst* arv){
-  //     free(arv->nome);
-  //     free(arv->type);
-  //     free(arv->edgeWeightType);
-  //     for(int i = 0; i <= dimension; i++ ){
-  //        free(arrayCity[i]);
-  //     }
-  //     free(arv);
-    //}
-  // }
-  // void free_vertice(vertice** vert, int dimension){
-  //    for(int i = 1; i < dimension+1; i++ ){
-  //    }
-  // }
+  Mst* freeMst(Mst* arv) {
+    free(arv->nome);
+    free(arv->type);
+    free(arv->edgeWeightType);
+    for(int i = 0; i <= arv->dimension; i++) {
+       free(arv->arrayCity[i]);
+    }
+    free(arv->arrayCity);
+    free(arv);
+    return NULL;
+  }
+
+  Vertice** freeVetorVertices(Vertice** vert, int dimension) {
+    for(int i = 1; i < dimension+1; i++) {
+      Adjacencia* aux = vert[i]->pilhaAdjacentes;
+      Adjacencia* auxProx = aux->prox;
+      while (auxProx != NULL) {
+        free(aux);
+        aux = auxProx;
+        auxProx = auxProx->prox;
+      }
+
+      free(aux);
+      free(vert[i]);
+    }
+    free(vert);
+    return NULL;
+  }

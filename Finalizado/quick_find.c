@@ -41,3 +41,8 @@ int UF_union(int p, int q){
     return 1;
 
 }
+
+void UF_free() {
+  free(id);
+  free(sz);
+}
