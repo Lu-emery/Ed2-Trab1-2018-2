@@ -61,7 +61,7 @@ int main(int argc, char const *argv[]){
 	}
 	printf("\n\n\n");
 
-	//int* tour = DFS(vertices, arv->dimension);
+	DFS(vertices, arv->dimension);
 
 	return 0;
 }

@@ -137,17 +137,32 @@
   }
 
  //Tour
-   // int* DFS(Vertice** vet, int dimension){
-   //   for(int i = 0; i < dimension; i++){
-   //     vet[i].cor = 1;
-   //   }
-   //
-   //
-   // }
-   //
-   // void DFS_Visit(Vertice* vert){
-   //   while
-   // }
+ #define branco 1
+ #define preto 0
+ #define cinza -1
+
+   void DFS(Vertice** vet, int dimension){
+     for(int i = 1; i < dimension; i++){
+       vet[i]->cor = branco;
+     }
+
+    DFS_Visit(vet[1]);
+   }
+
+   void DFS_Visit(Vertice* vert){
+     printf("%d\n", vert->indice);
+     vert->cor = cinza;
+     Adjacencia* aux = vert->pilhaAdjacentes;
+
+     while(aux != NULL){
+         if(aux->vertice->cor == branco){
+             DFS_Visit(aux->vertice);
+         }
+         aux = aux->prox;
+     }
+
+     vert->cor = preto;
+   }
 
 
 //AUXILIARES

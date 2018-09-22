@@ -68,5 +68,5 @@
   Edge* criaVetorAresta(Tsp*, int);
 
  //TOUR
-  // int* DFS(Vertice**, int);
-  // void DFS_Visit(Vertice*);
+  void DFS(Vertice**, int);
+  void DFS_Visit(Vertice*);
