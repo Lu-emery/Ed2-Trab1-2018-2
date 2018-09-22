@@ -1,5 +1,5 @@
 test: coisas.o Main.o quick.o
-	gcc -o exe coisas.o Main.o quick_find.o -lm
+	gcc -o trab1 coisas.o Main.o quick_find.o -lm
 
 coisas.o:
 	gcc -c coisas.c

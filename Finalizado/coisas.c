@@ -53,7 +53,7 @@
     int dimension = mst->dimension;
     fprintf(saida, "Name: %s \nTYPE: %s  \nEdge: %s \nDimension: %d \nMST_SECTION \n", mst->nome, mst->type, mst->edgeWeightType, dimension);
 
-    for (int i = 1; i < (dimension-1); i++) {
+    for (int i = 0; i < dimension-1; i++) {
       imprimeEdge(arvMinima[i], saida);
     }
     fprintf(saida, "EOF\n");
@@ -85,10 +85,11 @@
 
 //VERTICES E ADJACÊNCIAS
   Vertice** preencheVetorVertice (Edge* arvMinima, int dimension) {
-      Vertice** vetorVertice = (Vertice**) calloc(dimension, sizeof(Vertice*));
+      Vertice** vetorVertice = (Vertice**) calloc(dimension+1, sizeof(Vertice*));
 
 
-      for(int i = 0; i < dimension; i++){
+      for(int i = 0; i < dimension-1; i++){
+          //printf("[%d]\n", i);
           insereEmVetorVertices(vetorVertice, arvMinima[i]);
       }
 
@@ -98,6 +99,7 @@
   void insereEmVetorVertices (Vertice** vet, Edge entrada) {
     int indiceOri = entrada.ori;
     int indiceDest = entrada.dest;
+    //printf(" %d %d\n", entrada.ori, entrada.dest);
     //Checa se Ori existe
     if (vet[indiceOri] == NULL) {
       // printf("Criou um vertice origem [%d]\n", indiceOri);
@@ -135,7 +137,7 @@
  //TOUR
 
    void DFS (Vertice** vet, int dimension, FILE* saida) {
-     for(int i = 1; i < dimension; i++){
+     for(int i = 1; i <= dimension; i++){
        vet[i]->cor = branco;
      }
 
@@ -216,3 +218,19 @@
 
     return vetEdge;
   }
+
+  //free all
+  // void free_Mst(Mst* arv){
+  //     free(arv->nome);
+  //     free(arv->type);
+  //     free(arv->edgeWeightType);
+  //     for(int i = 0; i <= dimension; i++ ){
+  //        free(arrayCity[i]);
+  //     }
+  //     free(arv);
+    //}
+  // }
+  // void free_vertice(vertice** vert, int dimension){
+  //    for(int i = 1; i < dimension+1; i++ ){
+  //    }
+  // }

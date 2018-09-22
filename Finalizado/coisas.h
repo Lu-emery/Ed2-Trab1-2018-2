@@ -6,7 +6,7 @@
 
 //STRUCTS
   typedef struct city City;
-  typedef struct tsp Tsp;
+  typedef struct mst Mst;
   typedef struct edge Edge;
   typedef struct adjacencia Adjacencia;
   typedef struct vertice Vertice;
@@ -18,9 +18,9 @@
       float y;
   };
 
-  //TSP (travelling salesman problem)
+  //MST (minimum spanning tree)
   //Também contém os elementos da entrada
-  struct tsp {
+  struct mst {
       char* type;
       char* edgeWeightType;
       char* nome;
@@ -47,16 +47,17 @@
   };
 
 
-//TSP
+//MST
   City* criaCity(int, float, float);
   void imprimeCity(City*);
-  Tsp* insereCity(Tsp*, City*);
-  Tsp* criaTsp(char*, char*, char*, int );
-  void imprimeTsp (Tsp*);
+  Mst* insereCity(Mst*, City*);
+  Mst* criaMst(char*, char*, char*, int );
+  void imprimeMst (Edge* arvMinima, Mst* mst, FILE* saidaMST);
 
 //Edge
   int distance(City*, City*);
   int compara(const void*, const void*);
+  void imprimeEdge(Edge edge, FILE* saida);
 
 //Vertice de adjacência
   Vertice** preencheVetorVertice(Edge*, int);
@@ -64,9 +65,14 @@
   Adjacencia* criaAdjacencia(Vertice*);
 
 //Auxiliares
-  Tsp* leArquivo(FILE*, Tsp*);
-  Edge* criaVetorAresta(Tsp*, int);
+  Mst* leArquivo(FILE*, Mst*);
+  Edge* criaVetorAresta(Mst*, int);
 
  //TOUR
-  void DFS(Vertice**, int);
-  void DFS_Visit(Vertice*);
+  #define branco 1
+  #define preto 0
+  #define cinza -1
+
+  void DFS(Vertice**, int, FILE*);
+  void DFS_Visit(Vertice*, FILE*);
+  void imprimeTour(Vertice**, Mst*, FILE*);
