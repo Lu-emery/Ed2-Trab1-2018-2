@@ -7,11 +7,12 @@ int main(int argc, char const *argv[]){
 		printf("Insira o nome do arquivo de entrada\n");
 		return 1;
 	}
-
+	//tamanho do nome do arquivo + in/ + /n
 	int entradaSize = strlen(argv[1]+3+1);
 	char* entradaNome = malloc(entradaSize*sizeof(char));
 	strcpy (entradaNome, "in/");
 	strcat (entradaNome, argv[1]);
+
 
 	FILE* entrada = fopen(entradaNome, "r");
 	if (entrada == NULL) {
@@ -20,14 +21,17 @@ int main(int argc, char const *argv[]){
 
 	//MST
 	Mst* arv;
-	arv = leArquivo(entrada, arv);
-
+	arv = leArquivo(entrada, arv);//preenchimento dos dados referentes ao arquivo
+	//de entrada na struct arv
 	fclose(entrada);
 	free(entradaNome);
 
 	//Edges
+	//calcula o tamanho necessario para gerar edges q saem de todos
+	//os vertices para todos. Tal formula equivale a diagonal principal
+	//e o triangulo superior da matriz dos vertices.
 	int tam = ((arv->dimension*arv->dimension) - arv->dimension)/2;
-	Edge* vetEdge = criaVetorAresta(arv, tam);
+	Edge* vetEdge = criaVetorAresta(arv, tam);//cria todas as edges possiveis
 
 
 	//Quick find
@@ -43,12 +47,6 @@ int main(int argc, char const *argv[]){
 			indice_find++;
 		}
 	}
-
-	// printf("TESTE ARV MIN\n");
-	// for (int i = 0; i < arv->dimension-1; i++) {
-	// 	printf("%d %d\n", arvMinima[i].ori, arvMinima[i].dest);
-	// }
-	// printf("======\n\n\n");
 
 	int saidaMSTSize = strlen(argv[1]+5+4+1);
 	char* saidaMSTNome = malloc(saidaMSTSize*sizeof(char));
@@ -66,16 +64,6 @@ int main(int argc, char const *argv[]){
 	free(saidaMSTNome);
 	//Vertice de lista
 	Vertice** vertices = preencheVetorVertice(arvMinima, arv->dimension);
-
-
-	for(int i = 1; i <= arv->dimension; i++) {
-		if (vertices[i]->pilhaAdjacentes != NULL) {
-			Adjacencia* aux = vertices[i]->pilhaAdjacentes;
-			while(aux != NULL) {
-				aux = aux->prox;
-				}
-			}
-	}
 
 	int saidaTourSize = strlen(argv[1]+6+5+1);
 	char* saidaTourNome = malloc(saidaTourSize*sizeof(char));
