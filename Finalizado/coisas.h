@@ -51,7 +51,7 @@
   City* criaCity(int, float, float);
   void imprimeCity(City*);
   Mst* insereCity(Mst*, City*);
-  Mst* criaMst(char*, char*, char*, int );
+  Mst* criaMst(char*, char*, char*, int, Mst*);
   void imprimeMst (Edge* arvMinima, Mst* mst, FILE* saidaMST);
 
 //Edge

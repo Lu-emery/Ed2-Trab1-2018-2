@@ -19,7 +19,7 @@
     * pré-condicao: os campos enviados existem
     * pós-condicao: City criado*/
   City* criaCity (int ind, float x, float y) {
-    City* p = (City*) malloc(sizeof(p));
+    City* p = (City*) malloc(sizeof(City));
     p->index = ind;
     p->x = x;
     p->y = y;
@@ -32,16 +32,14 @@
     * outputs: traveler alocado e preenchido com seus daods
     * pré-condicao: os campos enviados existem
     * pós-condicao: traveler alocado e preenchido com seus daods*/
-  Mst* criaMst(char* nome, char* type, char* edgeWeightType, int dimension) {
-    Mst* mst = (Mst*) malloc(sizeof(Mst));
+  Mst* criaMst(char* nome, char* type, char* edgeWeightType, int dimension, Mst* arv) {
+    arv->arrayCity = (City**) malloc((dimension + 1)*sizeof(City*));
+    arv->nome = strdup(nome);
+    arv->type = strdup(type);
+    arv->edgeWeightType = strdup(edgeWeightType);
+    arv->dimension = dimension;
 
-    mst->arrayCity = (City**) malloc((dimension + 1)*sizeof(City*));
-    mst->nome = strdup(nome);
-    mst->type = strdup(type);
-    mst->edgeWeightType = strdup(edgeWeightType);
-    mst->dimension = dimension;
-
-    return mst;
+    return arv;
   }
 
   /* Printa na tela o traveler e seus city
@@ -99,7 +97,7 @@
     //Checa se Ori existe
     if (vet[indiceOri] == NULL) {
       // printf("Criou um vertice origem [%d]\n", indiceOri);
-      vet[indiceOri] = malloc(sizeof(Vertice));
+      vet[indiceOri] = (Vertice*) malloc(sizeof(Vertice));
       vet[indiceOri]->indice = indiceOri;
       vet[indiceOri]->pilhaAdjacentes = NULL;
       //vet[indiceOri]->cor = branco; //para a DFS
@@ -107,7 +105,7 @@
     //Checa se Dest existe
     if (vet[indiceDest] == NULL) {
       // printf("Criou um vertice destino [%d]\n", indiceDest);
-      vet[indiceDest] = malloc(sizeof(Vertice));
+      vet[indiceDest] = (Vertice*) malloc(sizeof(Vertice));
       vet[indiceDest]->indice = indiceDest;
       vet[indiceDest]->pilhaAdjacentes = NULL;
       //vet[indiceDest]->cor = branco; //para a DFS
@@ -175,15 +173,15 @@
 
     fscanf(entrada, "NAME: %s\n", nome);
 
-    while (strcmp(comentario, "TYPE:") != 0) {
+    do {
       //printf("ignorando o comentario\n");
       fscanf(entrada, "%s", comentario);
-    }
+    } while (strcmp(comentario, "TYPE:") != 0);
 
     fscanf(entrada, " %s\nDIMENSION: %d\nEDGE_WEIGHT_TYPE: %s\nNODE_COORD_SECTION\n", type, &dimension, edgeWeightType);
-    arv = criaMst(nome, type, edgeWeightType, dimension);
+    arv = criaMst(nome, type, edgeWeightType, dimension, arv);
 
-    for (int i = 0; i <= dimension; ++i) {
+    for (int i = 0; i < dimension; ++i) {
       int index;
       float x, y;
       fscanf(entrada, "%d %f %f\n", &index, &x, &y);
@@ -220,7 +218,9 @@
     free(arv->type);
     free(arv->edgeWeightType);
     for(int i = 0; i <= arv->dimension; i++) {
-       free(arv->arrayCity[i]);
+      if (arv->arrayCity[i] != NULL) {
+         free(arv->arrayCity[i]);
+      }
     }
     free(arv->arrayCity);
     free(arv);
@@ -228,16 +228,18 @@
   }
 
   Vertice** freeVetorVertices(Vertice** vert, int dimension) {
-    for(int i = 1; i < dimension+1; i++) {
-      Adjacencia* aux = vert[i]->pilhaAdjacentes;
-      Adjacencia* auxProx = aux->prox;
-      while (auxProx != NULL) {
+    for(int i = 1; i <= dimension; i++) {
+      if (vert[i]->pilhaAdjacentes != NULL) {
+        Adjacencia* aux = vert[i]->pilhaAdjacentes;
+        Adjacencia* auxProx = aux->prox;
+        while (auxProx != NULL) {
+          free(aux);
+          aux = auxProx;
+          auxProx = auxProx->prox;
+        }
         free(aux);
-        aux = auxProx;
-        auxProx = auxProx->prox;
+        free(auxProx);
       }
-
-      free(aux);
       free(vert[i]);
     }
     free(vert);

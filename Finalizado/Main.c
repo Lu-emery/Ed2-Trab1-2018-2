@@ -9,7 +9,7 @@ int main(int argc, char const *argv[]){
 	}
 
 	int entradaSize = strlen(argv[1]+3+1);
-	char* entradaNome = malloc(entradaSize*sizeof(char));
+	char entradaNome[entradaSize];
 	strcpy (entradaNome, "in/");
 	strcat (entradaNome, argv[1]);
 
@@ -19,11 +19,10 @@ int main(int argc, char const *argv[]){
 	}
 
 	//MST
-	Mst* arv;
+	Mst* arv = (Mst*) malloc(sizeof(Mst));
 	arv = leArquivo(entrada, arv);
 
 	fclose(entrada);
-	free(entradaNome);
 
 	//Edges
 	int tam = ((arv->dimension*arv->dimension) - arv->dimension)/2;
@@ -51,7 +50,7 @@ int main(int argc, char const *argv[]){
 	// printf("======\n\n\n");
 
 	int saidaMSTSize = strlen(argv[1]+5+4+1);
-	char* saidaMSTNome = malloc(saidaMSTSize*sizeof(char));
+	char saidaMSTNome[saidaMSTSize];
 	strcpy(saidaMSTNome, "mst/");
 	strcat(saidaMSTNome, arv->nome);
 	strcat(saidaMSTNome, ".mst");
@@ -63,22 +62,11 @@ int main(int argc, char const *argv[]){
 
 	imprimeMst(arvMinima, arv, saidaMST);
 	fclose(saidaMST);
-	free(saidaMSTNome);
 	//Vertice de lista
 	Vertice** vertices = preencheVetorVertice(arvMinima, arv->dimension);
 
-
-	for(int i = 1; i <= arv->dimension; i++) {
-		if (vertices[i]->pilhaAdjacentes != NULL) {
-			Adjacencia* aux = vertices[i]->pilhaAdjacentes;
-			while(aux != NULL) {
-				aux = aux->prox;
-				}
-			}
-	}
-
 	int saidaTourSize = strlen(argv[1]+6+5+1);
-	char* saidaTourNome = malloc(saidaTourSize*sizeof(char));
+	char saidaTourNome[saidaTourSize];
 	strcpy(saidaTourNome, "tour/");
 	strcat(saidaTourNome, arv->nome);
 	strcat(saidaTourNome, ".tour");
@@ -90,7 +78,6 @@ int main(int argc, char const *argv[]){
 	imprimeTour(vertices, arv, saidaTour);
 
 	fclose(saidaTour);
-	free(saidaTourNome);
 
 	printf("Preparando para dar free na UF\n\n");
 	UF_free();
@@ -106,7 +93,7 @@ int main(int argc, char const *argv[]){
 	free(arvMinima);
 	arvMinima = NULL;
 	printf("ArvMinima liberada com sucesso\n\n\n\n");
-	printf("Preparando p-ara dar free na MST\n\n");
+	printf("Preparando para dar free na MST\n\n");
 	arv = freeMst(arv);
 	printf("MST liberada com sucesso\n\n\n\n");
 

@@ -1,0 +1,8 @@
+Name: teste 
+TYPE: Tour  
+Edge: EUC_2D 
+Dimension: 2 
+Tour_SECTION 
+1
+2
+EOF
