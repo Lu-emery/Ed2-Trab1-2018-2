@@ -1,7 +1,6 @@
-Name: pr1002
-TYPE: Tour
-Edge: EUC_2D
-Dimension: 1002
+NAME: pr1002
+TYPE: TOUR
+DIMENSION: 1002
 TOUR_SECTION
 1
 2

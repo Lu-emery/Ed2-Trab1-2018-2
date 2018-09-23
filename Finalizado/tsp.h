@@ -37,6 +37,7 @@
 
   struct adjacencia {
     Vertice* vertice;
+    int distance;
     Adjacencia* prox;
   };
 
@@ -62,7 +63,7 @@
 //Vertice de adjacência
   Vertice** preencheVetorVertice(Edge*, int);
   void insereEmVetorVertices(Vertice**, Edge);
-  Adjacencia* criaAdjacencia(Vertice*);
+  Adjacencia* criaAdjacencia(Vertice*, int);
 
 //Auxiliares
   Data* leArquivo(FILE*, Data*);
@@ -73,7 +74,7 @@
   #define preto 0
   #define cinza -1
 
-  void DFS_Visit(Vertice*, FILE*);
+  int DFS_Visit(Vertice*, FILE*);
   void imprimeTour(Vertice**, Data*, FILE*);
 
   //free

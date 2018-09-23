@@ -13,6 +13,7 @@ int main(int argc, char const *argv[]){
 	strcpy (entradaNome, "in/");
 	strcat (entradaNome, argv[1]);
 
+	int tourLen = 0; //TESTE
 
 	FILE* entrada = fopen(entradaNome, "r");
 	if (entrada == NULL) {

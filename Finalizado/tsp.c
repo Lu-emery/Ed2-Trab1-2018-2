@@ -49,7 +49,7 @@
     * pós-condicao: dados do traveler printados na tela*/
   void imprimeData (Edge* arvMinima, Data* data, FILE* saida) {
     int dimension = data->dimension;
-    fprintf(saida, "Name: %s \nTYPE: %s  \nEdge: %s \nDimension: %d \nMST_SECTION \n", data->nome, data->type, data->edgeWeightType, dimension);
+    fprintf(saida, "NAME: %s\nTYPE: %s\nDIMENSION: %d\nMST_SECTION\n", data->nome, data->type, dimension);
 
     for (int i = 0; i < dimension-1; i++) {
       imprimeEdge(arvMinima[i], saida);
@@ -96,10 +96,12 @@
   }
 
 //VERTICES E ADJACÊNCIAS
+  /*
   * inputs: arvore minima, tamanho do cetor vertices
   * outputs: vetor de vertices alocado e preenchido
   * pré-condicao: arvore minima alocada
   * pós-condicao: nenhuma*/
+    Vertice** preencheVetorVertice (Edge* arvMinima, int dimension) {
       Vertice** vetorVertice = (Vertice**) calloc(dimension+1, sizeof(Vertice*));
       for(int i = 0; i < dimension-1; i++) {
           insereEmVetorVertices(vetorVertice, arvMinima[i]);
@@ -117,6 +119,7 @@
   void insereEmVetorVertices (Vertice** vet, Edge entrada) {
     int indiceOri = entrada.ori;
     int indiceDest = entrada.dest;
+    int dist = entrada.distance;
 
     //Checa se Ori existe
     if (vet[indiceOri] == NULL) {
@@ -135,11 +138,11 @@
       vet[indiceDest]->cor = branco; //para a DFS
     }
     //Cria a estrutura Adjacência do vértice destino
-    Adjacencia* a = criaAdjacencia(vet[indiceDest]);
+    Adjacencia* a = criaAdjacencia(vet[indiceDest], dist);
     //Faz ele ser o primeiro elemento da pilha de adjacência do vértice origem
     a->prox = vet[indiceOri]->pilhaAdjacentes;
     vet[indiceOri]->pilhaAdjacentes = a;
-    a = criaAdjacencia(vet[indiceOri]);
+    a = criaAdjacencia(vet[indiceOri], dist);
     a->prox = vet[indiceDest]->pilhaAdjacentes;
     vet[indiceDest]->pilhaAdjacentes = a;
   }
@@ -150,8 +153,9 @@
     * outputs: uma adjacencia alocada e preenchida com o primerio vertor
     * pré-condicao: vert alocado
     * pós-condicao: nenhum*/
-  Adjacencia* criaAdjacencia (Vertice* vert) {
+  Adjacencia* criaAdjacencia (Vertice* vert, int distance) {
     Adjacencia* a = (Adjacencia*) malloc(sizeof(Adjacencia));
+    a->distance = distance;
     a->vertice = vert;
     a->prox = NULL;
     return a;
@@ -165,19 +169,22 @@
    * pré-condicao: vert alocado, saida alocado e aberto
    * pós-condicao: vertice atual escrito no aquivo e sua cor atualizada
                    primeiro para cinza de chegacem e depois preto de concluido*/
-  void DFS_Visit (Vertice* vert, FILE* saida) {
+  int DFS_Visit (Vertice* vert, FILE* saida) {
+    int tourLen = 0;
     fprintf(saida, "%d\n", vert->indice);
     vert->cor = cinza;
     Adjacencia* aux = vert->pilhaAdjacentes;
 
     while(aux != NULL) {//O de N
       if(aux->vertice->cor == branco) {
+        tourLen += aux->distance;
         DFS_Visit(aux->vertice, saida);
       }
-    aux = aux->prox;
-  }
+        aux = aux->prox;
+    }
 
     vert->cor = preto;
+    return tourLen;
   }
 
   /* Imprime arquivo do Tuor
@@ -192,7 +199,7 @@
    void imprimeTour (Vertice** vet, Data* data, FILE* saida) {
 
      //Imprime cabeçalho
-     fprintf(saida, "Name: %s \nTYPE: Tour  \nEdge: %s \nDimension: %d \nTOUR_SECTION \n", data->nome, data->edgeWeightType, data->dimension);
+     fprintf(saida, "NAME: %s\nTYPE: TOUR\nDIMENSION: %d\nTOUR_SECTION\n", data->nome, data->dimension);
 
      DFS_Visit(vet[1], saida);
      fprintf(saida,"EOF\n");
