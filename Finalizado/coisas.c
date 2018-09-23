@@ -96,11 +96,11 @@
   }
 
 //VERTICES E ADJACÊNCIAS
-/* Preenche o vetor de vertices com
-  * inputs:
-  * outputs:
-  * pré-condicao:
-  * pós-condicao:*/
+/* Preenche o vetor de vertices
+  * inputs: arvore minima, tamanho do cetor vertices
+  * outputs: vetor de vertices alocado e preenchido
+  * pré-condicao: arvore minima alocada
+  * pós-condicao: nenhuma*/
   Vertice** preencheVetorVertice (Edge* arvMinima, int dimension) {
       Vertice** vetorVertice = (Vertice**) calloc(dimension+1, sizeof(Vertice*));
       for(int i = 0; i < dimension-1; i++) {
@@ -277,7 +277,7 @@
     free(arv->nome);
     free(arv->type);
     free(arv->edgeWeightType);
-    for(int i = 0; i <= arv->dimension; i++) {
+    for(int i = 1; i <= arv->dimension; i++) {
       if (arv->arrayCity[i] != NULL) {
          free(arv->arrayCity[i]);
       }
