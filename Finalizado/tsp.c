@@ -96,12 +96,20 @@
   }
 
 //VERTICES E ADJACÊNCIAS
+<<<<<<< HEAD:Finalizado/tsp.c
 /* Irá preencher o vetor de vertive com todos os vertives contidos na
    arvore minima
   * inputs: pontoeiro para a arvore minima, quantidade de vertices necessaria
   * outputs: vetor com os vertices
   * pré-condicao: arvore minima preenchida e alocada
   * pós-condicao: vetor de vertives preenchido e alocado*/
+=======
+/* Preenche o vetor de vertices
+  * inputs: arvore minima, tamanho do cetor vertices
+  * outputs: vetor de vertices alocado e preenchido
+  * pré-condicao: arvore minima alocada
+  * pós-condicao: nenhuma*/
+>>>>>>> 99ffc80218004cad76d2462fe5ccfe07959d4f67:Finalizado/coisas.c
   Vertice** preencheVetorVertice (Edge* arvMinima, int dimension) {
       Vertice** vetorVertice = (Vertice**) calloc(dimension+1, sizeof(Vertice*));
       for(int i = 0; i < dimension-1; i++) {
@@ -274,6 +282,7 @@
     * outputs: NULL
     * pré-condicao: arquivo de entrada alocado
     * pós-condicao: memoria do arquivo de entrada liberada*/
+<<<<<<< HEAD:Finalizado/tsp.c
   Data* freeData(Data* dadosEntrada) {
     free(dadosEntrada->nome);
     free(dadosEntrada->type);
@@ -281,6 +290,15 @@
     for(int i = 1; i <= dadosEntrada->dimension; i++) {
       if (dadosEntrada->arrayCity[i] != NULL) {
          free(dadosEntrada->arrayCity[i]);
+=======
+  Mst* freeMst(Mst* arv) {
+    free(arv->nome);
+    free(arv->type);
+    free(arv->edgeWeightType);
+    for(int i = 1; i <= arv->dimension; i++) {
+      if (arv->arrayCity[i] != NULL) {
+         free(arv->arrayCity[i]);
+>>>>>>> 99ffc80218004cad76d2462fe5ccfe07959d4f67:Finalizado/coisas.c
       }
     }
     free(dadosEntrada->arrayCity);
