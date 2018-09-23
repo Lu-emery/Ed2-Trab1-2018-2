@@ -73,7 +73,6 @@
   #define preto 0
   #define cinza -1
 
-  void DFS(Vertice**, int, FILE*);
   void DFS_Visit(Vertice*, FILE*);
   void imprimeTour(Vertice**, Mst*, FILE*);
 
