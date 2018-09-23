@@ -13,6 +13,7 @@ int main(int argc, char const *argv[]){
 	strcpy (entradaNome, "in/");
 	strcat (entradaNome, argv[1]);
 
+
 	FILE* entrada = fopen(entradaNome, "r");
 	if (entrada == NULL) {
 		printf("ERRO AO ABRIR O ARQUIVO DE ENTRADA %s\n", entradaNome);
@@ -20,8 +21,6 @@ int main(int argc, char const *argv[]){
 
 	//MST
 	Mst* arv = (Mst*) malloc(sizeof(Mst));
-	arv = leArquivo(entrada, arv);
-
 	arv = leArquivo(entrada, arv);//preenchimento dos dados referentes ao arquivo
 	//de entrada na struct arv
 	fclose(entrada);

@@ -60,7 +60,6 @@
 
 
 //EDGE
-
 /* Calcula a distancia entre duas cidades
   * inputs: duas citys
   * outputs: a distancia
@@ -220,18 +219,17 @@
 
     fscanf(entrada, "NAME: %s\n", nome);
 
-    do {
-      //printf("ignorando o comentario\n");
     //os comentarios são informações inuteis, por isso tudo entre nome e
     //type deve ser ignorado
+    do {
       fscanf(entrada, "%s", comentario);
     } while (strcmp(comentario, "TYPE:") != 0);
 
     fscanf(entrada, " %s\nDIMENSION: %d\nEDGE_WEIGHT_TYPE: %s\nNODE_COORD_SECTION\n", type, &dimension, edgeWeightType);
     arv = criaMst(nome, type, edgeWeightType, dimension, arv);
 
-    for (int i = 0; i < dimension; ++i) {
     //cria todas as edges e insere elas no arquivo de entrada
+    for (int i = 0; i < dimension; ++i) {
       int index;
       float x, y;
       fscanf(entrada, "%d %f %f\n", &index, &x, &y);
