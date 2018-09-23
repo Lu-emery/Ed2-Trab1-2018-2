@@ -1,16 +1,16 @@
-#include "coisas.h"
+#include "tsp.h"
 
-//MST
+//DATA
 
-  /* Insere City no MST
+  /* Insere City no DATA
     * inputs: trabaler, city
     * outputs:  nenhum
     * pré-condicao: existencia e alocação do trabaler e do city, indice valido
     * pós-condicao: City registrado no traveler no indice do mesmo -1
     pois a primeira cidade será sempre a cidade 1*/
-  Mst* insereCity (Mst* mst, City* p) {
-      mst->arrayCity[(p->index)] = p;
-      return mst;
+  Data* insereCity (Data* data, City* p) {
+      data->arrayCity[(p->index)] = p;
+      return data;
   }
 
   /* Cria city
@@ -27,19 +27,19 @@
   }
 
   /*Aloca e preenche os dados do traveler
-    * inputs: nome, tipo de grafo dado por entrada(sempre sera MST),
+    * inputs: nome, tipo de grafo dado por entrada(sempre sera DATA),
     tipo de peso dos arcos (sempre sera EUC_2D), dimensão(quantidade de cidades)
     * outputs: traveler alocado e preenchido com seus daods
     * pré-condicao: os campos enviados existem
     * pós-condicao: traveler alocado e preenchido com seus daods*/
-  Mst* criaMst(char* nome, char* type, char* edgeWeightType, int dimension, Mst* arv) {
-    arv->arrayCity = (City**) malloc((dimension + 1)*sizeof(City*));
-    arv->nome = strdup(nome);
-    arv->type = strdup(type);
-    arv->edgeWeightType = strdup(edgeWeightType);
-    arv->dimension = dimension;
+  Data* criaData(char* nome, char* type, char* edgeWeightType, int dimension, Data* dadosEntrada) {
+    dadosEntrada->arrayCity = (City**) malloc((dimension + 1)*sizeof(City*));
+    dadosEntrada->nome = strdup(nome);
+    dadosEntrada->type = strdup(type);
+    dadosEntrada->edgeWeightType = strdup(edgeWeightType);
+    dadosEntrada->dimension = dimension;
 
-    return arv;
+    return dadosEntrada;
   }
 
   /* Printa na tela o traveler e seus city
@@ -47,15 +47,15 @@
     * outputs: nenhum
     * pré-condicao: traveler devidamente alocado e preenchido
     * pós-condicao: dados do traveler printados na tela*/
-  void imprimeMst (Edge* arvMinima, Mst* mst, FILE* saida) {
-    int dimension = mst->dimension;
-    fprintf(saida, "Name: %s \nTYPE: %s  \nEdge: %s \nDimension: %d \nMST_SECTION \n", mst->nome, mst->type, mst->edgeWeightType, dimension);
+  void imprimeData (Edge* arvMinima, Data* data, FILE* saida) {
+    int dimension = data->dimension;
+    fprintf(saida, "Name: %s \nTYPE: %s  \nEdge: %s \nDimension: %d \nMST_SECTION \n", data->nome, data->type, data->edgeWeightType, dimension);
 
     for (int i = 0; i < dimension-1; i++) {
       imprimeEdge(arvMinima[i], saida);
     }
     fprintf(saida, "EOF\n");
-    printf("MST Imprimida com sucesso\n\n");
+    // printf("DATA Imprimida com sucesso\n\n");
   }
 
 
@@ -86,8 +86,8 @@
       return ret;
   }
 
-  /* Imprime no arquivo de saida referente a MST
-    * inputs: uma edge e o arquivo em q vai ser escrito a MST
+  /* Imprime no arquivo de saida referente a DATA
+    * inputs: uma edge e o arquivo em q vai ser escrito a DATA
     * outputs: nenhum
     * pré-condicao: edge allocado, arquivo saido aberto/existente
     * pós-condicao: o arquivo foi escrito*/
@@ -96,11 +96,12 @@
   }
 
 //VERTICES E ADJACÊNCIAS
-/* Preenche o vetor de vertices com
-  * inputs:
-  * outputs:
-  * pré-condicao:
-  * pós-condicao:*/
+/* Irá preencher o vetor de vertive com todos os vertives contidos na
+   arvore minima
+  * inputs: pontoeiro para a arvore minima, quantidade de vertices necessaria
+  * outputs: vetor com os vertices
+  * pré-condicao: arvore minima preenchida e alocada
+  * pós-condicao: vetor de vertives preenchido e alocado*/
   Vertice** preencheVetorVertice (Edge* arvMinima, int dimension) {
       Vertice** vetorVertice = (Vertice**) calloc(dimension+1, sizeof(Vertice*));
       for(int i = 0; i < dimension-1; i++) {
@@ -191,14 +192,14 @@
                     a leitura
     * pós-condicao: arquivo de saida preenchido com o cabeçalho padrão de
                     para arquivos de tour e o tuor em si*/
-   void imprimeTour (Vertice** vet, Mst* mst, FILE* saida) {
+   void imprimeTour (Vertice** vet, Data* data, FILE* saida) {
 
      //Imprime cabeçalho
-     fprintf(saida, "Name: %s \nTYPE: Tour  \nEdge: %s \nDimension: %d \nTour_SECTION \n", mst->nome, mst->edgeWeightType, mst->dimension);
+     fprintf(saida, "Name: %s \nTYPE: Tour  \nEdge: %s \nDimension: %d \nTOUR_SECTION \n", data->nome, data->edgeWeightType, data->dimension);
 
      DFS_Visit(vet[1], saida);
      fprintf(saida,"EOF\n");
-     printf("Tour imprimido com sucesso\n");
+     // printf("Tour imprimido com sucesso\n");
 
 
    }
@@ -213,7 +214,7 @@
   * pré-condicao: arquivo alocado e aberto para leitura
   * pós-condicao: estrutura especializada para leitura do arquivo alocado
                   e preenchido*/
-  Mst* leArquivo (FILE* entrada, Mst* arv) {
+  Data* leArquivo (FILE* entrada, Data* dadosEntrada) {
     char type[10], edgeWeightType[20], nome[40], comentario[20];
     int dimension;
 
@@ -226,7 +227,7 @@
     } while (strcmp(comentario, "TYPE:") != 0);
 
     fscanf(entrada, " %s\nDIMENSION: %d\nEDGE_WEIGHT_TYPE: %s\nNODE_COORD_SECTION\n", type, &dimension, edgeWeightType);
-    arv = criaMst(nome, type, edgeWeightType, dimension, arv);
+    dadosEntrada = criaData(nome, type, edgeWeightType, dimension, dadosEntrada);
 
     //cria todas as edges e insere elas no arquivo de entrada
     for (int i = 0; i < dimension; ++i) {
@@ -234,9 +235,9 @@
       float x, y;
       fscanf(entrada, "%d %f %f\n", &index, &x, &y);
 
-      insereCity(arv, criaCity(index, x, y));
+      insereCity(dadosEntrada, criaCity(index, x, y));
     }
-    return arv;
+    return dadosEntrada;
   }
 
   /*Aloca e preenche um vetor de todas as arestas possiveis no grafo
@@ -247,13 +248,13 @@
                    preenchido, tam equivalente ao tamanho máximo de arestas
                    do grafo
     * pós-condicao:vetor de aresta alocado e preenchido*/
-  Edge* criaVetorAresta (Mst* arv, int tam) {
+  Edge* criaVetorAresta (Data* dadosEntrada, int tam) {
     Edge* vetEdge = (Edge*)malloc((tam+1)*sizeof(Edge));
 
     int cont = 1;
-    for(int i = 1; i < arv->dimension; i++) {
-      for(int j = i+1; j <= arv->dimension; j++) {
-        vetEdge[cont].distance = distance(arv->arrayCity[i], arv->arrayCity[j]);
+    for(int i = 1; i < dadosEntrada->dimension; i++) {
+      for(int j = i+1; j <= dadosEntrada->dimension; j++) {
+        vetEdge[cont].distance = distance(dadosEntrada->arrayCity[i], dadosEntrada->arrayCity[j]);
         vetEdge[cont].ori = i;
         vetEdge[cont].dest = j;
         vetEdge[cont].check = 0;
@@ -261,7 +262,7 @@
       }
     }
 
-    qsort(vetEdge, tam, sizeof(Edge), compara);
+    qsort(vetEdge+1, tam, sizeof(Edge), compara);
 
     return vetEdge;
   }
@@ -273,17 +274,17 @@
     * outputs: NULL
     * pré-condicao: arquivo de entrada alocado
     * pós-condicao: memoria do arquivo de entrada liberada*/
-  Mst* freeMst(Mst* arv) {
-    free(arv->nome);
-    free(arv->type);
-    free(arv->edgeWeightType);
-    for(int i = 0; i <= arv->dimension; i++) {
-      if (arv->arrayCity[i] != NULL) {
-         free(arv->arrayCity[i]);
+  Data* freeData(Data* dadosEntrada) {
+    free(dadosEntrada->nome);
+    free(dadosEntrada->type);
+    free(dadosEntrada->edgeWeightType);
+    for(int i = 1; i <= dadosEntrada->dimension; i++) {
+      if (dadosEntrada->arrayCity[i] != NULL) {
+         free(dadosEntrada->arrayCity[i]);
       }
     }
-    free(arv->arrayCity);
-    free(arv);
+    free(dadosEntrada->arrayCity);
+    free(dadosEntrada);
     return NULL;
   }
 

@@ -6,7 +6,7 @@
 
 //STRUCTS
   typedef struct city City;
-  typedef struct mst Mst;
+  typedef struct data Data;
   typedef struct edge Edge;
   typedef struct adjacencia Adjacencia;
   typedef struct vertice Vertice;
@@ -18,9 +18,9 @@
       float y;
   };
 
-  //MST (minimum spanning tree)
+  //DATA (minimum spanning tree)
   //Também contém os elementos da entrada
-  struct mst {
+  struct data {
       char* type;
       char* edgeWeightType;
       char* nome;
@@ -47,12 +47,12 @@
   };
 
 
-//MST
+//DATA
   City* criaCity(int, float, float);
   void imprimeCity(City*);
-  Mst* insereCity(Mst*, City*);
-  Mst* criaMst(char*, char*, char*, int, Mst*);
-  void imprimeMst (Edge* arvMinima, Mst* mst, FILE* saidaMST);
+  Data* insereCity(Data*, City*);
+  Data* criaData(char*, char*, char*, int, Data*);
+  void imprimeData (Edge* arvMinima, Data* data, FILE* saidaDATA);
 
 //Edge
   int distance(City*, City*);
@@ -65,8 +65,8 @@
   Adjacencia* criaAdjacencia(Vertice*);
 
 //Auxiliares
-  Mst* leArquivo(FILE*, Mst*);
-  Edge* criaVetorAresta(Mst*, int);
+  Data* leArquivo(FILE*, Data*);
+  Edge* criaVetorAresta(Data*, int);
 
  //TOUR
   #define branco 1
@@ -74,8 +74,8 @@
   #define cinza -1
 
   void DFS_Visit(Vertice*, FILE*);
-  void imprimeTour(Vertice**, Mst*, FILE*);
+  void imprimeTour(Vertice**, Data*, FILE*);
 
   //free
-  Mst* freeMst(Mst*);
+  Data* freeData(Data*);
   Vertice** freeVetorVertices(Vertice**, int);
