@@ -1,8 +1,7 @@
-Name: tsp225 
-TYPE: Tour  
-Edge: EUC_2D 
-Dimension: 225 
-Tour_SECTION 
+NAME: tsp225
+TYPE: TOUR
+DIMENSION: 225
+TOUR_SECTION
 1
 3
 198

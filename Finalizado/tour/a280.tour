@@ -1,8 +1,7 @@
-Name: a280 
-TYPE: Tour  
-Edge: EUC_2D 
-Dimension: 280 
-Tour_SECTION 
+NAME: a280
+TYPE: TOUR
+DIMENSION: 280
+TOUR_SECTION
 1
 280
 3

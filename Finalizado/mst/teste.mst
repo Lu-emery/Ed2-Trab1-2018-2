@@ -1,7 +1,8 @@
-Name: teste 
-TYPE: TSP  
-Edge: EUC_2D 
-Dimension: 2 
-MST_SECTION 
+NAME: teste
+TYPE: MST
+DIMENSION: 4
+MST_SECTION
 1 2
+2 3
+3 4
 EOF

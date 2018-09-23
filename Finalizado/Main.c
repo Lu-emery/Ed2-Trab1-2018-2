@@ -13,7 +13,8 @@ int main(int argc, char const *argv[]){
 	strcpy (entradaNome, "in/");
 	strcat (entradaNome, argv[1]);
 
-	int tourLen = 0; //TESTE
+	int tourLen = 0; //Variável inutilizada, só para fins de teste e preenchimento do relatório
+	int mstWeight = 0; //Variável inutilizada, só para fins de teste e preenchimento do relatório
 
 	FILE* entrada = fopen(entradaNome, "r");
 	if (entrada == NULL) {
@@ -41,8 +42,8 @@ int main(int argc, char const *argv[]){
 
 
 	for(int i = 1; i <= tam && indice_find <= (dadosEntrada->dimension-1); i++) {
-		//printf("[%d] A distância entre %d e %d é :%d \n", i, vetEdge[i].ori, vetEdge[i].dest, vetEdge[i].distance); //TESTE
 		if(UF_union(vetEdge[i].ori, vetEdge[i].dest)) {
+			mstWeight += vetEdge[i].distance;
 			arvMinima[indice_find] = vetEdge[i];
 			indice_find++;
 		}
@@ -74,7 +75,13 @@ int main(int argc, char const *argv[]){
 	}
 	FILE* saidaTour = fopen(saidaTourNome, "w");
 
-	imprimeTour(vertices, dadosEntrada, saidaTour);
+	// O tourLen não é usado para nada, só para teste
+	tourLen = imprimeTour(vertices, dadosEntrada, saidaTour);
+
+	// Teste de tamanho da mst e tour
+	FILE* tamanhos = fopen("tamanhos.txt", "w");
+	fprintf(tamanhos, "MstWeight = %d\nTourLen = %d\n", mstWeight, tourLen);
+	fclose(tamanhos);
 
 	fclose(saidaTour);
 

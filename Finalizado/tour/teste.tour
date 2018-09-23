@@ -1,8 +1,9 @@
-Name: teste 
-TYPE: Tour  
-Edge: EUC_2D 
-Dimension: 2 
-Tour_SECTION 
+NAME: teste
+TYPE: TOUR
+DIMENSION: 4
+TOUR_SECTION
 1
 2
+3
+4
 EOF

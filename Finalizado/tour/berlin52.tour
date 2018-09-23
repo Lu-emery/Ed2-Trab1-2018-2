@@ -1,8 +1,7 @@
-Name: berlin52 
-TYPE: Tour  
-Edge: EUC_2D 
-Dimension: 52 
-Tour_SECTION 
+NAME: berlin52
+TYPE: TOUR
+DIMENSION: 52
+TOUR_SECTION
 1
 49
 36

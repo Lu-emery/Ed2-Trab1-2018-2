@@ -1,8 +1,7 @@
-Name: eil101 
-TYPE: Tour  
-Edge: EUC_2D 
-Dimension: 101 
-Tour_SECTION 
+NAME: eil101
+TYPE: TOUR
+DIMENSION: 101
+TOUR_SECTION
 1
 50
 76

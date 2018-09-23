@@ -1,8 +1,7 @@
-Name: eil101 
-TYPE: TSP  
-Edge: EUC_2D 
-Dimension: 101 
-MST_SECTION 
+NAME: eil101
+TYPE: MST
+DIMENSION: 101
+MST_SECTION
 37 98
 3 77
 33 81

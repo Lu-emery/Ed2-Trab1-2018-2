@@ -37,7 +37,6 @@
 
   struct adjacencia {
     Vertice* vertice;
-    int distance;
     Adjacencia* prox;
   };
 
@@ -47,6 +46,10 @@
     Adjacencia* pilhaAdjacentes;
   };
 
+  //Auxiliares
+    Data* leArquivo(FILE*, Data*);
+    int distance(City*, City*);
+    int compara(const void*, const void*);
 
 //DATA
   City* criaCity(int, float, float);
@@ -56,27 +59,22 @@
   void imprimeData (Edge* arvMinima, Data* data, FILE* saidaDATA);
 
 //Edge
-  int distance(City*, City*);
-  int compara(const void*, const void*);
+  Edge* criaVetorAresta(Data*, int);
   void imprimeEdge(Edge edge, FILE* saida);
 
 //Vertice de adjacência
   Vertice** preencheVetorVertice(Edge*, int);
   void insereEmVetorVertices(Vertice**, Edge);
-  Adjacencia* criaAdjacencia(Vertice*, int);
-
-//Auxiliares
-  Data* leArquivo(FILE*, Data*);
-  Edge* criaVetorAresta(Data*, int);
+  Adjacencia* criaAdjacencia(Vertice*);
 
  //TOUR
   #define branco 1
   #define preto 0
   #define cinza -1
 
-  int DFS_Visit(Vertice*, FILE*);
-  void imprimeTour(Vertice**, Data*, FILE*);
+  int DFS_Visit(Vertice*, FILE*, Data*);
+  int imprimeTour(Vertice**, Data*, FILE*);
 
-  //free
+  //FREE
   Data* freeData(Data*);
   Vertice** freeVetorVertices(Vertice**, int);

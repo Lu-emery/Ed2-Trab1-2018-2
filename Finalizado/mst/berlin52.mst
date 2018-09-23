@@ -1,8 +1,7 @@
-Name: berlin52 
-TYPE: TSP  
-Edge: EUC_2D 
-Dimension: 52 
-MST_SECTION 
+NAME: berlin52
+TYPE: MST
+DIMENSION: 52
+MST_SECTION
 24 48
 35 36
 34 35
