@@ -1,2 +1,0 @@
-MstWeight = 6066
-TourLen = 10212
