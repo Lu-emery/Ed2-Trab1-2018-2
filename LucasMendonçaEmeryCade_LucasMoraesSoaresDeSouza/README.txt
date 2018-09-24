@@ -33,3 +33,5 @@ COMENTÁRIOS:
 	O tempo "time" no arquivo relatório é referente ao "real" exibido no comando "time" e foi testado em computador pessoal, não no Labgrad.
 
 	O tempo de trabalho foi bem dividido entre os integrantes do grupo, ambos tendo participação em todas as etapas do trabalho.
+
+	O trabalho se encontra no GitHub no endereço <https://github.com/Lu-emery/Ed2-Trab1-2018-2>
